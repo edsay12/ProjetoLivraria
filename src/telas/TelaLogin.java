@@ -17,13 +17,13 @@ public class TelaLogin extends javax.swing.JFrame {
     ResultSet rs = null;
 
     public void logar() {
-        String sql = "select * from usuarios where login=? and senha =?";
+        String sql = "select * from vendedor where usuario=? and senha =?";
         try {
             //preparado a consulta 
             pst = conexao.prepareStatement(sql);
             pst.setString(1, usuario.getText());
             pst.setString(2, senha.getText());
-            //executando a busca 
+            //executando a busca  
             rs = pst.executeQuery();
             //se existir user e senha 
             if (rs.next()) {

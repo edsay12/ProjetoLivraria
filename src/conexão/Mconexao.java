@@ -9,7 +9,7 @@ public class Mconexao {
         //chama o driver (tipo de banco)
         String driver = "com.mysql.jdbc.Driver";
         //informaçoes do banco 
-        String url = "jdbc:mysql://localhost:3306/dbinfox";
+        String url = "jdbc:mysql://localhost:3306/livrariadb";
         String user = "root";
         String password = "";
         // Fazemdo a conexão
