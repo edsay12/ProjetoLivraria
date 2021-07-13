@@ -274,10 +274,6 @@ public void Cadastrar(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TusuarioActionPerformed
-       
-    }//GEN-LAST:event_TusuarioActionPerformed
-
     private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
         Cadastrar();
     }//GEN-LAST:event_btnCadastroActionPerformed
@@ -297,6 +293,10 @@ public void Cadastrar(){
     private void TbairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TbairroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TbairroActionPerformed
+
+    private void TusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TusuarioActionPerformed
+
+    }//GEN-LAST:event_TusuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,6 +323,9 @@ public void Cadastrar(){
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

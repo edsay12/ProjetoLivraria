@@ -193,7 +193,9 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContaActionPerformed
-        TelaCadastro cadastro = new TelaCadastro();
+        //TelaCadastro cadastro = new TelaCadastro();
+        //cadastro.setVisible(true);
+        TelaCadastroCliente cadastro = new TelaCadastroCliente();
         cadastro.setVisible(true);
     }//GEN-LAST:event_btnContaActionPerformed
 

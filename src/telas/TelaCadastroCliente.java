@@ -14,20 +14,20 @@ import javax.swing.JPanel;
  *
  * @author usuario
  */
-public class TelaCadastro extends javax.swing.JFrame {
+public class TelaCadastroCliente extends javax.swing.JFrame {
    
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs  = null;
     
-    public TelaCadastro() {
+    public TelaCadastroCliente() {
         conexao = Mconexao.conector();
         initComponents();
     }
     
 public void Cadastrar(){
     //falta adicionar os outros e criar o banco de dados
-    String sql = "INSERT INTO vendedor(nomeVendedor,sobrenomeVendedor,telefoneVendedor,cpfVendedor,cidadeVendedor,bairroVendedor,ruaVendedor,usuario,senha) VALUES(?,?,?,?,?,?,?,?,?)";
+    String sql = "INSERT INTO clientes(nomeCliente,sobrenomeCliente,numeroCliente,cpfCliente,cidadeCliente,bairroCliente,ruaCliente) VALUES(?,?,?,?,?,?,?)";
     // aqui eu preparo a consulta 
     try {
         pst = conexao.prepareStatement(sql);
@@ -38,8 +38,7 @@ public void Cadastrar(){
         pst.setString(5, Tcidade.getText());
         pst.setString(6, Tbairro.getText());
         pst.setString(7, Tendereço.getText());
-        pst.setString(8, Tusuario.getText());
-        pst.setString(9, Tsenha.getText());
+   
         
         pst.executeUpdate();
         if(rs.next()){
@@ -48,7 +47,9 @@ public void Cadastrar(){
             JOptionPane.showMessageDialog(null, "Erro ao inserir dados no banco");
         }
     } catch (Exception e) {
+        
         JOptionPane.showMessageDialog(null, e);
+        
     }
     
     
@@ -63,15 +64,11 @@ public void Cadastrar(){
     private void initComponents() {
 
         jSeparator1 = new javax.swing.JSeparator();
-        Tusuario = new javax.swing.JTextField();
         Tfone = new javax.swing.JTextField();
         Tnome = new javax.swing.JTextField();
-        Tsenha = new javax.swing.JTextField();
         btnCadastro = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         Tsobrenome = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -87,12 +84,6 @@ public void Cadastrar(){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Tusuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TusuarioActionPerformed(evt);
-            }
-        });
-
         btnCadastro.setText("Cadastrar");
         btnCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,13 +91,9 @@ public void Cadastrar(){
             }
         });
 
-        jLabel1.setText("Usuario");
-
         jLabel2.setText("Nome");
 
         jLabel3.setText("Fone");
-
-        jLabel4.setText("Senha");
 
         Tsobrenome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,7 +114,7 @@ public void Cadastrar(){
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(174, 174, 174)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,27 +175,13 @@ public void Cadastrar(){
                                     .addComponent(Tcpf)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1))
-                                        .addGap(199, 199, 199))
-                                    .addComponent(Tusuario))
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(240, 240, 240)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4)
-                                        .addGap(201, 201, 201))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(32, 32, 32)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Tsenha, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel9)
-                                                    .addComponent(jLabel10))
-                                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -258,25 +231,13 @@ public void Cadastrar(){
                     .addComponent(Tendereço, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Tcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Tbairro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Tsenha, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Tusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(44, 44, 44)
                 .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(53, 53, 53))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void TusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TusuarioActionPerformed
-       
-    }//GEN-LAST:event_TusuarioActionPerformed
 
     private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
         Cadastrar();
@@ -315,20 +276,23 @@ public void Cadastrar(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastro().setVisible(true);
+                new TelaCadastroCliente().setVisible(true);
             }
         });
     }
@@ -340,15 +304,11 @@ public void Cadastrar(){
     private javax.swing.JTextField Tendereço;
     private javax.swing.JTextField Tfone;
     private javax.swing.JTextField Tnome;
-    private javax.swing.JTextField Tsenha;
     private javax.swing.JTextField Tsobrenome;
-    private javax.swing.JTextField Tusuario;
     private javax.swing.JButton btnCadastro;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
