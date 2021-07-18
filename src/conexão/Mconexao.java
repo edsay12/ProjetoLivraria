@@ -7,11 +7,11 @@ public class Mconexao {
     public static Connection conector() {
         java.sql.Connection conexao = null;
         //chama o driver (tipo de banco)
-        String driver = "com.mysql.jdbc.Driver";
+        String driver = "com.mysql.cj.jdbc.Driver";
         //informaçoes do banco 
         String url = "jdbc:mysql://localhost:3306/livrariadb";
         String user = "root";
-        String password = "";
+        String password = "1234";
         // Fazemdo a conexão
         try {
             // arquivo de coneçao 
