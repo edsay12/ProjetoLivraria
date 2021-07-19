@@ -6,8 +6,10 @@
 package telas;
 
 import conexão.Mconexao;
+import java.math.BigInteger;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import javax.xml.bind.DatatypeConverter;
 /**
  *
  * @author tales
@@ -23,10 +25,10 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
         conexao = Mconexao.conector();
         initComponents();
     }
+    @SuppressWarnings("empty-statement")
     public void Cadastrar(){
-    //falta adicionar os outros e criar o banco de dados
-    String sql = "INSERT INTO livros(nomeLivro, tipoLivro, valorLivro, quantidadeLivro) "
-            + "VALUES(?,?,?,?)";
+    String sql = "INSERT INTO livros(nomeLivro, tipoLivro, valorLivroVenda, quantidadeLivro,valorLivroAluguel) "
+            + "VALUES(?,?,?,?,?)";
     // aqui eu preparo a consulta }
     try {
         pst = conexao.prepareStatement(sql);
@@ -34,8 +36,12 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
         pst.setString(2, txtCateg.getText());
         pst.setString(3, txtValor.getText());
         pst.setString(4, txtQuant.getText());
-        
+        Integer aluga = Integer.parseInt(txtValor.getText()); 
+        String  aluguel = Integer.toString((int) (aluga * 0.2)); ;
+        pst.setString(5,aluguel );
         pst.executeUpdate();
+        
+        
         if(rs.next()){
             JOptionPane.showMessageDialog(null, "sucesso");
         }else{
@@ -43,6 +49,7 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
         }
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, e);
+        
     }
 }
     
@@ -91,6 +98,11 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,6 +179,10 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Cadastrar();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

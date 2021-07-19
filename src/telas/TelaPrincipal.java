@@ -6,19 +6,57 @@
 package telas;
 import conexão.Mconexao;
 import java.sql.*;
+import conexão.Mconexao;
+//importanto biblioteca rs2xml
+import net.proteanit.sql.DbUtils; //vai ajudar a preencher a tabela la ma frente 
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author usuario
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs  = null;
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
+        
+        conexao = Mconexao.conector();
         initComponents();
+        Consulta(); // preeenche a tabela com os dados 
     }
-
+    
+    /**
+     *
+     * @param nome
+     */
+    public final void Consulta(){
+         String nome = srchLivros.getText();
+         try{
+             
+             if(nome == ""){
+                 String sql = "select * from livros";
+                 pst = conexao.prepareStatement(sql);
+             }else{
+                 String sql = "select * from livros where nomeLivro like ?";
+                 pst = conexao.prepareStatement(sql);
+                 pst.setString(1, srchLivros.getText() + '%');
+             }
+             
+             rs = pst.executeQuery();
+             System.out.println(rs);
+             tblLivros.setModel(DbUtils.resultSetToTableModel(rs));
+             
+         }catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+         
+         
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,6 +128,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnLivros.setText("Pesquisar");
+        btnLivros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLivrosActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Cadastrar");
         jButton4.setMaximumSize(new java.awt.Dimension(73, 21));
@@ -176,7 +219,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void srchLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_srchLivrosActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_srchLivrosActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -184,6 +227,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaCadastroLivros cadLivros = new TelaCadastroLivros();
         cadLivros.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLivrosActionPerformed
+        // TODO add your handling code here:
+        Consulta();
+       
+    }//GEN-LAST:event_btnLivrosActionPerformed
 
     /**
      * @param args the command line arguments
