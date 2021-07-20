@@ -5,18 +5,19 @@
             <url>src/telas/TelaCadastroLivros.java</url>
             <bookmark id="1">
                 <name/>
-                <line>183</line>
+                <line>188</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/usuario/Desktop/Livraria/src/telas/TelaCadastroLivros.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Livraria/src/telas/TelaPrincipal.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Livraria/src/conexão/Mconexao.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Livraria/src/telas/TelaLogin.java</file>
-            <file>file:/C:/Users/usuario/Desktop/Livraria/src/Models/Vendedor.java</file>
+            <file>file:/C:/Users/tales/Desktop/ProjetoLivraria/src/telas/TelaLogin.java</file>
+            <file>file:/C:/Users/tales/Desktop/ProjetoLivraria/src/telas/TelaAluguel.java</file>
+            <file>file:/C:/Users/tales/Desktop/ProjetoLivraria/src/telas/TelaPrincipal.java</file>
+            <file>file:/C:/Users/tales/Desktop/ProjetoLivraria/Banco_Livraria/LivrariaSql-v3.sql</file>
+            <file>file:/C:/Users/tales/Desktop/ProjetoLivraria/src/telas/TelaCompra.java</file>
+            <file>file:/C:/Users/tales/Desktop/ProjetoLivraria/src/telas/TelaCadastroLivros.java</file>
         </group>
     </open-files>
 </project-private>

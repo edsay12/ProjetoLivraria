@@ -9,7 +9,8 @@ import conexão.Mconexao;
 import java.math.BigInteger;
 import javax.swing.JOptionPane;
 import java.sql.*;
-import javax.xml.bind.DatatypeConverter;
+import javax.swing.JFrame;
+
 /**
  *
  * @author tales
@@ -24,6 +25,7 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
     public TelaCadastroLivros() {
         conexao = Mconexao.conector();
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     @SuppressWarnings("empty-statement")
     public void Cadastrar(){
@@ -39,11 +41,14 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
         Integer aluga = Integer.parseInt(txtValor.getText()); 
         String  aluguel = Integer.toString((int) (aluga * 0.2)); ;
         pst.setString(5,aluguel );
-        pst.executeUpdate();
+        int rs = pst.executeUpdate();
         
-        
-        if(rs.next()){
-            JOptionPane.showMessageDialog(null, "sucesso");
+        if(rs>0){
+            JOptionPane.showMessageDialog(null, "Sucesso");
+            txtNome.setText(null);
+            txtCateg.setText(null);
+            txtValor.setText(null);
+            txtQuant.setText(null);
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao inserir dados no banco");
         }
@@ -132,7 +137,7 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(106, 106, 106)))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,7 +173,10 @@ public class TelaCadastroLivros extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
