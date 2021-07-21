@@ -5,6 +5,11 @@
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>Livraria</name>
             <source-roots>
+                <root id="src..git.dir"/>
+                <root id="src.Banco_Livraria.dir"/>
+                <root id="src.Complementos.dir"/>
+                <root id="src.build.dir"/>
+                <root id="src.nbproject.dir"/>
                 <root id="src.dir"/>
             </source-roots>
             <test-roots>

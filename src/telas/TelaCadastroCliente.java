@@ -7,6 +7,7 @@ package telas;
 
 import java.sql.*;
 import conexão.Mconexao;
+import javax.swing.JFrame;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     public TelaCadastroCliente() {
         conexao = Mconexao.conector();
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
 public void Cadastrar(){
@@ -39,10 +41,18 @@ public void Cadastrar(){
         pst.setString(6, Tbairro.getText());
         pst.setString(7, Tendereço.getText());
    
+        int rs = pst.executeUpdate();
         
-        pst.executeUpdate();
-        if(rs.next()){
+        if(rs > 0){
             JOptionPane.showMessageDialog(null, "sucesso");
+            Tnome.setText(null);
+            Tsobrenome.setText(null);
+            Tfone.setText(null);
+            Tcpf.setText(null);
+            Tcidade.setText(null);
+            Tbairro.setText(null);
+            Tendereço.setText(null);
+            
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao inserir dados no banco");
         }
