@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package telas;
+
 import java.sql.*;
 import conexão.Mconexao;
 //importanto biblioteca rs2xml
@@ -11,53 +12,62 @@ import net.proteanit.sql.DbUtils; //vai ajudar a preencher a tabela la ma frente
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
+
 /**
  *
  * @author usuario
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+
     Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs  = null;
+    ResultSet rs = null;
+
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
-        
+
         conexao = Mconexao.conector();
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Consulta(); // preeenche a tabela com os dados 
     }
-    
+
     /**
      *
-     * @param nome
+     * @return 
      */
-    public final void Consulta(){
-         String nome = srchLivros.getText();
-         try{
+        public String BuscarId(){
+        int setar = tblLivros.getSelectedRow();
+        String str = tblLivros.getModel().getValueAt(setar, 0).toString();
+        return str;
              
-             if(nome == ""){
-                 String sql = "select * from livros";
-                 pst = conexao.prepareStatement(sql);
-             }else{
-                 String sql = "select * from livros where nomeLivro like ?";
-                 pst = conexao.prepareStatement(sql);
-                 pst.setString(1, srchLivros.getText() + '%');
-             }
-             
-             rs = pst.executeQuery();
-             System.out.println(rs);
-             tblLivros.setModel(DbUtils.resultSetToTableModel(rs));
-             
-         }catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-         
-         
         
     }
+    public final void Consulta(){
+        String nome = srchLivros.getText();
+         try{
+
+             if("".equals(nome)){
+                String sql = "select * from livros";
+                pst = conexao.prepareStatement(sql);
+             }else{
+                String sql = "select * from livros where nomeLivro like ?";
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, srchLivros.getText() + '%');
+            }
+
+            rs = pst.executeQuery();
+           
+            tblLivros.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,6 +86,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnLivros = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblLivros = new javax.swing.JTable();
+        DeletBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         cadClientes = new javax.swing.JMenuItem();
@@ -83,6 +94,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -143,6 +155,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblLivros);
 
+        DeletBtn.setText("Delete");
+        DeletBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeletBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -153,6 +172,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(170, 170, 170)
+                        .addComponent(DeletBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -167,7 +188,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(srchLivros, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLivros, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 135, Short.MAX_VALUE))
+                .addGap(0, 133, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,10 +203,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(btnLivros, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeletBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -212,10 +234,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Info");
 
         jMenuItem1.setText("Clientes");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Livros");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Vendas");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
@@ -238,11 +278,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setBounds(0, 0, 631, 453);
     }// </editor-fold>//GEN-END:initComponents
-
+    //Busca o id do livro 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        TelaCompra compra = new TelaCompra();
-        compra.setVisible(true);
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLivrosActionPerformed
@@ -264,9 +303,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        TelaAluguel aluguel = new TelaAluguel();
+        TelaAluguel aluguel = new TelaAluguel(BuscarId());
         aluguel.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void DeletBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletBtnActionPerformed
+        String sql = "delete from livros where idLivro = ?";
+    // aqui eu preparo a consulta 
+    try {
+        pst = conexao.prepareStatement(sql);
+        pst.setString(1, BuscarId());
+        
+        pst.executeUpdate();
+        if(rs.next()){
+            JOptionPane.showMessageDialog(null, "sucesso");
+            
+            
+           
+        }else{
+            JOptionPane.showMessageDialog(null, "Livro deletado ");
+            Consulta();
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+        
+       
+    }//GEN-LAST:event_DeletBtnActionPerformed
+//clientes
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    //Livros_idLivro
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,6 +379,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DeletBtn;
     private javax.swing.JButton btnLivros;
     private javax.swing.JMenuItem cadClientes;
     private javax.swing.JMenuItem cadLivros;
@@ -316,9 +392,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField srchLivros;
     private javax.swing.JTable tblLivros;
     // End of variables declaration//GEN-END:variables
+
+    
 }

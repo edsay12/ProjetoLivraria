@@ -8,6 +8,7 @@ package telas;
 import java.sql.*;
 import conexão.Mconexao;
 import javax.swing.JFrame;
+import java.awt.HeadlessException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -42,10 +43,8 @@ public void Cadastrar(){
         pst.setString(7, Tendereço.getText());
         pst.setString(8, Tusuario.getText());
         pst.setString(9, Tsenha.getText());
-        
-        int rs = pst.executeUpdate();
-        
-        if(rs > 0){
+        pst.executeUpdate();
+        if(rs.next()){
             JOptionPane.showMessageDialog(null, "sucesso");
             
             Tnome.setText(null);

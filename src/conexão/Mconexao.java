@@ -11,7 +11,7 @@ public class Mconexao {
         //informaçoes do banco 
         String url = "jdbc:mysql://localhost:3306/livrariadb";
         String user = "root";
-        String password = "1234";
+        String password = "";
         // Fazemdo a conexão
         try {
             // arquivo de coneçao 
