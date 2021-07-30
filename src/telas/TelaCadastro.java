@@ -29,7 +29,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     }
     
 public void Cadastrar(){
-    //falta adicionar os outros e criar o banco de dados
+   
     String sql = "INSERT INTO vendedor(nomeVendedor,sobrenomeVendedor,telefoneVendedor,cpfVendedor,cidadeVendedor,bairroVendedor,ruaVendedor,usuario,senha) VALUES(?,?,?,?,?,?,?,?,?)";
     // aqui eu preparo a consulta 
     try {

@@ -19,10 +19,11 @@ public class TelaAluguel extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs  = null;
   
-    public TelaAluguel() {
+    public TelaAluguel(String id ) {
         conexao = Mconexao.conector();
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        txtLivro.setText(id);
     }
 
     public void Alugar(){
@@ -76,6 +77,12 @@ public class TelaAluguel extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(0, 204, 204));
         jPanel5.setForeground(new java.awt.Color(0, 204, 204));
+
+        txtLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLivroActionPerformed(evt);
+            }
+        });
 
         jLabel21.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -176,6 +183,10 @@ public class TelaAluguel extends javax.swing.JFrame {
         Alugar();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void txtLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLivroActionPerformed
+            // TODO add your handling code here:
+    }//GEN-LAST:event_txtLivroActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,65 +217,21 @@ public class TelaAluguel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaAluguel().setVisible(true);
+               new TelaAluguel().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTextField txtCateg;
-    private javax.swing.JTextField txtCateg1;
-    private javax.swing.JTextField txtCateg2;
-    private javax.swing.JTextField txtCateg3;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtLivro;
-    private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNome1;
-    private javax.swing.JTextField txtNome2;
-    private javax.swing.JTextField txtNome3;
-    private javax.swing.JTextField txtQuant;
-    private javax.swing.JTextField txtQuant1;
-    private javax.swing.JTextField txtQuant2;
-    private javax.swing.JTextField txtQuant3;
-    private javax.swing.JTextField txtValor;
-    private javax.swing.JTextField txtValor1;
-    private javax.swing.JTextField txtValor2;
-    private javax.swing.JTextField txtValor3;
     private javax.swing.JTextField txtVendedor;
     // End of variables declaration//GEN-END:variables
 }
