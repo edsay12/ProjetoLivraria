@@ -7,63 +7,103 @@ package telas;
 
 import java.sql.*;
 import conexão.Mconexao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 /**
  *
  * @author usuario
  */
-public class TelaCadastroCliente extends javax.swing.JFrame {
-   
+public class TelaClienteUpdate extends javax.swing.JFrame {
+
     Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs  = null;
-    
-    public TelaCadastroCliente() {
+    ResultSet rs = null;
+
+    public TelaClienteUpdate(String id_cliente) {
         conexao = Mconexao.conector();
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }
-    
-public void Cadastrar(){
-    //falta adicionar os outros e criar o banco de dados
-    String sql = "INSERT INTO clientes(nomeCliente,sobrenomeCliente,numeroCliente,cpfCliente,cidadeCliente,bairroCliente,ruaCliente) VALUES(?,?,?,?,?,?,?)";
-    // aqui eu preparo a consulta 
-    try {
-        pst = conexao.prepareStatement(sql);
-        pst.setString(1, Tnome.getText());
-        pst.setString(2, Tsobrenome.getText());
-        pst.setString(3, Tfone.getText());
-        pst.setString(4, Tcpf.getText());
-        pst.setString(5, Tcidade.getText());
-        pst.setString(6, Tbairro.getText());
-        pst.setString(7, Tendereço.getText());
-   
-        int rs = pst.executeUpdate();
-        
-        if(rs > 0){
-            JOptionPane.showMessageDialog(null, "sucesso");
-            Tnome.setText(null);
-            Tsobrenome.setText(null);
-            Tfone.setText(null);
-            Tcpf.setText(null);
-            Tcidade.setText(null);
-            Tbairro.setText(null);
-            Tendereço.setText(null);
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Erro ao inserir dados no banco");
+        try {
+            SetCampos(id_cliente);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaClienteUpdate.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (Exception e) {
-        
-        JOptionPane.showMessageDialog(null, e);
-        
     }
     
     
-}
+   
+    private void SetCampos(String id) throws SQLException {
+
+        String sql = "select * from clientes where idCliente = ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, id);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaClienteUpdate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        rs = pst.executeQuery();
+
+        while (rs.next()) {
+            JId.setText(id);
+            Tnome.setText(rs.getString(3));
+            Tsobrenome.setText(rs.getString(4));
+            Tfone.setText(rs.getString(5));
+            Tcpf.setText(rs.getString(2));
+            Tcidade.setText(rs.getString(7));
+            Tbairro.setText(rs.getString(8));
+            Tendereço.setText(rs.getString(6));
+        }
+
+    }
+
+    TelaClienteUpdate() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void Update() {
+        
+        //falta adicionar os outros e criar o banco de dados
+        String sql = "UPDATE clientes SET nomeCliente=?,sobrenomeCliente=?,numeroCliente=?,cpfCliente=?,cidadeCliente=?,bairroCliente=?,ruaCliente=?  WHERE idCliente =?";
+        // aqui eu preparo a consulta 
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, Tnome.getText());
+            pst.setString(2, Tsobrenome.getText());
+            pst.setString(3, Tfone.getText());
+            pst.setString(4, Tcpf.getText());
+            pst.setString(5, Tcidade.getText());
+            pst.setString(6, Tbairro.getText());
+            pst.setString(7, Tendereço.getText());
+            pst.setString(8,JId.getText());
+
+            int rs = pst.executeUpdate();
+
+            if (rs > 0) {
+                JOptionPane.showMessageDialog(null, "sucesso");
+                Tnome.setText(null);
+                Tsobrenome.setText(null);
+                Tfone.setText(null);
+                Tcpf.setText(null);
+                Tcidade.setText(null);
+                Tbairro.setText(null);
+                Tendereço.setText(null);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir dados no banco");
+            }
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,10 +131,11 @@ public void Cadastrar(){
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        JId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnCadastro.setText("Cadastrar");
+        btnCadastro.setText("Update");
         btnCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastroActionPerformed(evt);
@@ -115,7 +156,7 @@ public void Cadastrar(){
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cadastro de usuários");
+        jLabel5.setText("Editar cliente");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,7 +165,7 @@ public void Cadastrar(){
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(174, 174, 174)
                 .addComponent(jLabel5)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,40 +203,44 @@ public void Cadastrar(){
 
         jLabel10.setText("Cpf");
 
+        JId.setBackground(new java.awt.Color(240, 240, 240));
+        JId.setForeground(new java.awt.Color(255, 255, 255));
+        JId.setBorder(null);
+        JId.setCaretColor(new java.awt.Color(255, 255, 255));
+        JId.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Tfone, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                            .addComponent(Tnome))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Tsobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(Tcpf)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(240, 240, 240)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(JId)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Tcidade, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(Tfone, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                                    .addComponent(Tnome))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Tsobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                                    .addComponent(Tcpf)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addGap(240, 240, 240)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(Tcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -205,7 +250,10 @@ public void Cadastrar(){
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(Tendereço, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(Tendereço, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(273, 273, 273)
+                                .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -241,8 +289,13 @@ public void Cadastrar(){
                     .addComponent(Tendereço, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Tcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Tbairro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(JId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53))
         );
 
@@ -250,7 +303,7 @@ public void Cadastrar(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
-        Cadastrar();
+        Update();
     }//GEN-LAST:event_btnCadastroActionPerformed
 
     private void TsobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TsobrenomeActionPerformed
@@ -286,14 +339,18 @@ public void Cadastrar(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaClienteUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -302,12 +359,13 @@ public void Cadastrar(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastroCliente().setVisible(true);
+                new TelaClienteUpdate().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField JId;
     private javax.swing.JTextField Tbairro;
     private javax.swing.JTextField Tcidade;
     private javax.swing.JTextField Tcpf;

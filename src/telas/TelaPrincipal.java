@@ -105,7 +105,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Livraria Novo Tempo");
+        jLabel4.setText("Livraria novo tempo");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8_book_and_pencil_64px.png"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -150,7 +150,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nome", "Tipo", "Valor", "Quantidade"
+                "Id", "Cpf", "Nome", "Sobrenome", "Telefone"
             }
         ));
         jScrollPane2.setViewportView(tblLivros);
@@ -332,7 +332,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_DeletBtnActionPerformed
 //clientes
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        TelaPrincipalCliente1 c1 = new  TelaPrincipalCliente1();
+        c1.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     //Livros_idLivro
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

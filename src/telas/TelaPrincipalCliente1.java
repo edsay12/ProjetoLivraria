@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  *
  * @author usuario
  */
-public class TelaPrincipal extends javax.swing.JFrame {
+public class TelaPrincipalCliente1 extends javax.swing.JFrame {
 
     Connection conexao = null;
     PreparedStatement pst = null;
@@ -26,7 +26,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form TelaPrincipal
      */
-    public TelaPrincipal() {
+    public TelaPrincipalCliente1() {
 
         conexao = Mconexao.conector();
         initComponents();
@@ -50,10 +50,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
          try{
 
              if("".equals(nome)){
-                String sql = "select * from livros";
+                String sql = "select idCliente,cpfCliente,nomeCliente,sobrenomeCliente,numeroCliente from clientes";
                 pst = conexao.prepareStatement(sql);
              }else{
-                String sql = "select * from livros where nomeLivro like ?";
+                String sql = "select idCliente,cpfCliente,nomeCliente,sobrenomeCliente,numeroCliente from clientes where nomeCliente like ?";
                 pst = conexao.prepareStatement(sql);
                 pst.setString(1, srchLivros.getText() + '%');
             }
@@ -80,7 +80,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         srchLivros = new javax.swing.JTextField();
         btnLivros = new javax.swing.JButton();
@@ -110,14 +109,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8_book_and_pencil_64px.png"))); // NOI18N
         jLabel2.setText("jLabel2");
 
-        jButton1.setText("Comprar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Alugar");
+        jButton2.setText("Atualizar");
         jButton2.setMaximumSize(new java.awt.Dimension(73, 21));
         jButton2.setMinimumSize(new java.awt.Dimension(73, 21));
         jButton2.setPreferredSize(new java.awt.Dimension(73, 21));
@@ -155,7 +147,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblLivros);
 
-        DeletBtn.setText("Delete");
+        DeletBtn.setText("Deletar");
         DeletBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeletBtnActionPerformed(evt);
@@ -171,8 +163,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(170, 170, 170)
                         .addComponent(DeletBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -204,10 +194,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DeletBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(DeletBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -278,11 +269,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setBounds(0, 0, 631, 453);
     }// </editor-fold>//GEN-END:initComponents
-    //Busca o id do livro 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLivrosActionPerformed
         // TODO add your handling code here:
@@ -302,13 +288,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_cadLivrosActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        TelaAluguel aluguel = new TelaAluguel(BuscarId());
-        aluguel.setVisible(true);
+    TelaClienteUpdate c1 = new TelaClienteUpdate(BuscarId());
+    c1.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
     private void DeletBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletBtnActionPerformed
-        String sql = "delete from livros where idLivro = ?";
+        String sql = "delete from clientes where idcliente = ?";
     // aqui eu preparo a consulta 
     try {
         pst = conexao.prepareStatement(sql);
@@ -319,9 +306,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "sucesso");
             
             
-           
         }else{
-            JOptionPane.showMessageDialog(null, "Livro deletado ");
+            JOptionPane.showMessageDialog(null, "Cliente deletado com exito ");
             Consulta();
         }
     } catch (Exception e) {
@@ -360,20 +346,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalCliente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalCliente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalCliente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalCliente1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+                new TelaPrincipalCliente1().setVisible(true);
             }
         });
     }
@@ -383,7 +370,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnLivros;
     private javax.swing.JMenuItem cadClientes;
     private javax.swing.JMenuItem cadLivros;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
